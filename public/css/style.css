@@ -110,7 +110,12 @@ img {
     margin-bottom: 10px;
 }
 
-.news__date {
+.news__line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.news__date, .news__author {
     color: grey;
 }
 

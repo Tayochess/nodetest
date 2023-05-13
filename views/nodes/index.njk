@@ -25,7 +25,11 @@
                         <li class="news__item">
                             <div class="news__heading">
                                 <div class="news__text">{{ item.text }}</div>
-                                <div class="news__date">{{ item.dateFormatted }}</div>
+                                <div class="news__line">
+                                    <div class="news__date">{{ item.dateFormatted }}</div>
+                                    <div class="news__author">{{ item.username }}</div>
+                                </div>
+                                
                             </div>
 
                             {% if item.files %}

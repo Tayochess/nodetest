@@ -17,7 +17,7 @@ class News {
         const limit = 20;
         let offset = (page - 1) * limit;
 
-        return this.db.select()
+        return this.db.select('*', this.db.raw(`(SELECT name FROM users WHERE users.id = ${this.tableName}.author LIMIT 1) AS username`))
             .from(this.tableName)
             .orderBy('id', 'desc')
             .limit(limit)
@@ -47,7 +47,7 @@ class News {
         return this.db(this.tableName).insert({
             'text': text,
             'files': files,
-            'date': database.fn.now(),
+            'date': this.db.fn.now(),
             'author': author,
         })
         .then((data) => data[0]);
