@@ -1,0 +1,32 @@
+{% set pageTitle = "Регистрация" %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                <a class="link" href="/login">Войти</a>
+            </nav>
+        </section>
+
+        <section class="container">
+            <form id="signin-form" class="form" action="/signup" method="post" enctype="application/x-www-form-urlencoded">
+                <label class="form__label" for="form-email">Email</label>
+                <input class="form__input" id="form-email" name="email" type="email" required>
+                <label class="form__label" for="form-name">Имя пользователя</label>
+                <input class="form__input" id="form-name" name="username" type="text" required>
+                <label class="form__label" for="form-password">Пароль</label>
+                <input class="form__input" id="form-password" name="password" type="password" required>
+
+                {% if signupFailed %}
+                    <div class="form__popup form__negative">Пользователь существует!</div>
+                {% endif %}
+
+                <button class="form__button link" type="submit">Регистрация</button>
+            </form>
+        </section>
+    </main>
+
+{% endblock %}

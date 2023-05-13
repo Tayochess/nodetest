@@ -1,0 +1,34 @@
+{% set pageTitle = "Добавить новость" %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                <a class="link" href="/logout">Выйти</a>
+                <a class="link" href="/feed/1">Лента</a>
+                <a class="link" href="/posts/1">Мои новости</a>
+            </nav>
+        </section>
+
+        <section class="container">
+            <form id="create-form" class="form" action="/create" method="post" enctype="multipart/form-data">
+                <label class="form__label" for="news-text">Текст новости</label>
+                <textarea class="form__input" name="text" id="news-text" cols="30" rows="10" required></textarea>
+                <input class="form__input" type="file" name="media" id="news-media" accept="image/*" multiple/>
+
+                {% if authFailed %}
+                    <div class="form__popup form__negative">Сначала авторизуйтесь!</div>
+                {% endif %}
+                {% if success %}
+                    <div class="form__popup form__positive">Новость добавлена!</div>
+                {% endif %}
+
+                <button class="form__button link" type="submit">Добавить новость</button>
+            </form>
+        </section>
+    </main>
+
+{% endblock %}

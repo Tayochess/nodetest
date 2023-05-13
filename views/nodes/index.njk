@@ -1,0 +1,57 @@
+{% set pageTitle = 'Лента' %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                {% if user %}
+                    <a class="link" href="/logout">Выйти</a>
+                    <a class="link" href="/posts/1">Мои новости</a>
+                    <a class="link" href="/create">Добавить новость</a>
+                {% else %}
+                    <a class="link" href="/login">Войти</a>
+                    <a class="link" href="/signup">Регистрация</a>
+                {% endif %}
+            </nav>
+        </section>
+
+        <section class="container">
+            {% if news %}
+                <ul class="news__list">
+                    {% for item in news %}
+                        <li class="news__item">
+                            <div class="news__heading">
+                                <div class="news__text">{{ item.text }}</div>
+                                <div class="news__date">{{ item.dateFormatted }}</div>
+                            </div>
+
+                            {% if item.files %}
+                                <div class="news__media">
+                                    {% for file in item.files %}
+                                        <div class="news__image">
+                                            <img src="/upload/{{ file }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="nav">
+                    {% if page > 1 %}
+                        <a class="link" href="/feed/{{ page - 1}}">Назад</a>
+                    {% endif %}
+
+                    {% if news and news|length == 20 %}
+                        <a class="link" href="/feed/{{ page + 1}}">Дальше</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+{% endblock %}

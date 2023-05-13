@@ -1,0 +1,30 @@
+{% set pageTitle = "Авторизация" %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                <a class="link" href="/signup">Регистрация</a>
+            </nav>
+        </section>
+
+        <section class="container">
+            <form id="login-form" class="form" action="/login" method="post" enctype="application/x-www-form-urlencoded">
+                <label class="form__label" for="form-email">Email</label>
+                <input class="form__input" id="form-email" name="email" type="email" required>
+                <label class="form__label" for="form-password">Пароль</label>
+                <input class="form__input" id="form-password" name="password" type="password" required>
+
+                {% if authFailed %}
+                    <div class="form__popup form__negative">Неверный логин или пароль!</div>
+                {% endif %}
+
+                <button class="form__button link" type="submit">Войти</button>
+            </form>
+        </section>
+    </main>
+
+{% endblock %}

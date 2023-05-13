@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    -webkit-text-size-adjust: none;
+}
+  
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+  
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 27px;
+}
+  
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+p {
+    margin: 0;
+    padding: 0;
+}
+  
+a {
+    text-decoration: none;
+    color: inherit;
+}
+  
+ul {
+    list-style-type: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+.container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav__bottom {
+    margin-top: 20px;
+}
+
+.link {
+    display: block;
+    padding: 10px 20px;
+    border: 1px solid #2196F3;
+    color: #2196F3;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 15px;
+    font-size: inherit;
+    line-height: inherit;
+    background: inherit;
+    text-align: center;
+}
+
+.link__wide {
+    flex-basis: 50%;
+    margin: 0;
+}
+
+.link__wide:first-child {
+    margin-right: 30px;
+}
+
+.news__list {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.news__item {
+    padding: 10px;
+    border: 2px solid #eaeaea;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.news__heading {
+    background: #eaeaea;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.news__text {
+    margin-bottom: 10px;
+}
+
+.news__date {
+    color: grey;
+}
+
+.news__media {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.news__image {
+    margin-top: 20px;
+}
+
+.news__image > img {
+    width: 500px;
+    height: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.form__input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 2px solid #eaeaea;
+    border-radius: 10px;
+}
+
+.form__button {
+    margin: 20px 0 0;
+}
+
+.media__button {
+    margin: 20px 0 0;
+    width: 100%;
+}

@@ -1,0 +1,44 @@
+{% set pageTitle = 'Мои новости' %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                <a class="link" href="/logout">Выйти</a>
+                <a class="link" href="/feed/1">Лента</a>
+                <a class="link" href="/create">Добавить новость</a>
+            </nav>
+        </section>
+
+        <section class="container">
+            {% if news %}
+                <ul class="news__list">
+                    {% for item in news %}
+                        <li class="news__item">
+                            <div class="news__text">{{ item.text }}</div>
+
+                            {% if item.files %}
+                                <div class="news__media">
+                                    {% for file in item.files %}
+                                        <div class="news__image">
+                                            <img src="/upload/{{ file }}">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="nav nav__bottom">
+                                <a class="link link__wide" href="/edit/{{ item.id }}">Редактировать</a>
+                                <button class="link link__wide delete-button" type="button" data-post="{{ item.id }}">Удалить</button>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </section>
+    </main>
+
+{% endblock %}

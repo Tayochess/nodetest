@@ -1,0 +1,45 @@
+{% set pageTitle = "Редактировать новость" %}
+
+{% extends "layouts/default.njk" %}
+
+{% block bodyContent %}
+
+    <main>
+        <section class="container">
+            <nav class="nav">
+                <a class="link" href="/logout">Выйти</a>
+                <a class="link" href="/feed/1">Лента</a>
+                <a class="link" href="/posts/1">Мои новости</a>
+            </nav>
+        </section>
+
+        <section class="container">
+            <form id="edit-form" class="form" method="post" data-post="{{ news.id }}" enctype="multipart/form-data">
+                <label class="form__label" for="news-text">Текст новости</label>
+                <textarea class="form__input" name="text" id="news-text" cols="30" rows="10" required>{{ news.text }}</textarea>
+                <input class="form__input" type="file" name="media" id="news-media" accept="image/*" multiple/>
+
+                {% if news.files %}
+                    <div class="news__media">
+                        {% for file in news.files %}
+                            <div class="news__image post-image" data-file="{{ file }}" data-included="true">
+                                <img src="/upload/{{ file }}">
+                                <button class="media__button link remove-button" type="button">Убрать</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if authFailed %}
+                    <div class="form__popup form__negative">Сначала авторизуйтесь!</div>
+                {% endif %}
+                {% if success %}
+                    <div class="form__popup form__negative">Новость обновлена!</div>
+                {% endif %}
+
+                <button class="form__button link" type="submit">Сохранить новость</button>
+            </form>
+        </section>
+    </main>
+
+{% endblock %}
