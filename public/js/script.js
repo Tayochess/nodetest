@@ -2,9 +2,7 @@ document.querySelectorAll('.delete-button').forEach((element) => {
     element.addEventListener('click', (e) => {
         const postId = e.currentTarget.dataset.post;
         
-        axios.post('/delete', {
-            postId: postId
-        })
+        axios.delete(`/delete/${postId}`)
         .then(function (res) {
             if (res.status == 200) {
                 alert('Запись удалена!');
@@ -32,11 +30,13 @@ if (editForm) {
 
     editForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        let oldFiles = [];
+        let oldFiles = [], deletedFiles = [];
 
         images.forEach((element) => {
             if (element.dataset.included != "false") {
                 oldFiles.push(element.dataset.file);
+            } else {
+                deletedFiles.push(element.dataset.file);
             }
         });
 
@@ -50,6 +50,7 @@ if (editForm) {
         
         formData.append('text', editForm.querySelector('#news-text').value);
         formData.append('oldFiles', oldFiles);
+        formData.append('deletedFiles', deletedFiles);
         formData.append('postId', editForm.dataset.post);
 
         axios.post('/edit', formData, {

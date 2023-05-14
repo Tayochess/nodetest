@@ -36,13 +36,6 @@ class News {
             .offset(offset);
     }
 
-    getAuthor(id) {
-        return this.db.select('author')
-            .from(this.tableName)
-            .where({ id })
-            .then((data) => data[0]);
-    }
-
     create(text, files, author) {
         return this.db(this.tableName).insert({
             'text': text,

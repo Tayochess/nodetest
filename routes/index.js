@@ -4,6 +4,7 @@ const pick = require('lodash/pick');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const multer = require('multer');
+const fs = require('fs');
 
 const config = require('../config');
 const auth = require('../middleware/auth');
@@ -243,7 +244,7 @@ router
     .route('/edit')
     .post(auth, checkUploadAuthEdit, upload.array("media"), async (req, res) => {  
         try {
-            const { postId, text, oldFiles } = pick(req.body, 'postId', 'text', 'oldFiles');
+            const { postId, text, oldFiles, deletedFiles } = pick(req.body, 'postId', 'text', 'oldFiles', 'deletedFiles');
 
             if (isNaN(postId)) {
                 return res.status(400).send('Incorrect query');
@@ -252,6 +253,14 @@ router
             let files = req.files.map((item) => item.filename);
             if (oldFiles.length > 0) {
                 files = files.concat(oldFiles.split(','));
+            }
+
+            if (deletedFiles.length > 0) {
+                let filesToDelete = deletedFiles.split(',');
+
+                filesToDelete.forEach((file) => {
+                    fs.rm(`${uploadDir}/${file}`, (err) => { console.log(err); });
+                });
             }
             
             let news = await News.update(postId, text, files);
@@ -263,26 +272,30 @@ router
     });
 
 router
-    .route('/delete')
-    .post(auth, upload.array("media"), async (req, res) => {  
+    .route('/delete/:id')
+    .delete(auth, upload.array("media"), async (req, res) => {  
         try {
             if (!req.user) {
                 return res.status(401).send('You need to log in');
             }
-            
-            const { postId } = pick(req.body, 'postId');
 
+            const postId = parseInt(req.params.id);
+            
             if (isNaN(postId)) {
                 return res.status(400).send('Incorrect query');
             }
 
-            let { author } = await News.getAuthor(postId);
+            let news = await News.getNews(postId);
 
-            if (req.user.user_id != author) {
+            if (req.user.user_id != news.author) {
                 return res.status(400).send('Incorrect query');
             }
 
-            let news = await News.delete(postId);
+            news.files.forEach((file) => {
+                fs.rm(`${uploadDir}/${file}`, (err) => { console.log(err); });
+            });
+
+            await News.delete(postId);
 
             return res.status(200).send('Post deleted');
         } catch (err) {
